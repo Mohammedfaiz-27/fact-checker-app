@@ -1,0 +1,48 @@
+import asyncio
+from fastapi import APIRouter, File, UploadFile, Form
+from typing import Optional
+from pydantic import BaseModel
+from app.services.fact_check_service import FactCheckService
+
+router = APIRouter()
+service = FactCheckService()
+
+class ClaimInput(BaseModel):
+    claim_text: str
+
+@router.post("/")
+async def check_claim(data: ClaimInput):
+    # Run blocking check_fact in threadpool to prevent blocking event loop
+    loop = asyncio.get_event_loop()
+    result = await loop.run_in_executor(None, service.check_fact, data.claim_text)
+    return result
+
+@router.post("/multimodal")
+async def check_multimodal_claim(
+    claim_text: Optional[str] = Form(None),
+    file: Optional[UploadFile] = File(None)
+):
+    """
+    Handle multimodal fact checking: text, images, videos, and audio files
+    """
+    if not claim_text and not file:
+        return {"error": "Either claim_text or file must be provided"}
+
+    loop = asyncio.get_event_loop()
+
+    if file:
+        # Read file content
+        file_content = await file.read()
+        result = await loop.run_in_executor(
+            None,
+            service.check_multimodal_fact,
+            claim_text or "",
+            file_content,
+            file.content_type,
+            file.filename
+        )
+    else:
+        # Text only
+        result = await loop.run_in_executor(None, service.check_fact, claim_text)
+
+    return result

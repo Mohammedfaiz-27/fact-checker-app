@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint)",
+      "Bash(npm run:*)",
+      "Bash(python -m flake8:*)",
+      "Bash(python:*)",
+      "Bash(npm start)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(dir:*)",
+      "Bash(python3:*)",
+      "WebSearch"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
