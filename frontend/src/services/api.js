@@ -9,7 +9,11 @@ if (process.env.NODE_ENV === 'development') {
 export async function checkClaim(claimText) {
   try {
     const url = `${API_BASE_URL}/api/claims/`;
-    console.log('Making request to:', url);
+
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Making request to:', url);
+    }
 
     const res = await fetch(url, {
       method: 'POST',
@@ -43,7 +47,11 @@ export async function checkMultimodalClaim(claimText, file) {
     }
 
     const url = `${API_BASE_URL}/api/claims/multimodal`;
-    console.log('Making multimodal request to:', url);
+
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Making multimodal request to:', url);
+    }
 
     const res = await fetch(url, {
       method: 'POST',

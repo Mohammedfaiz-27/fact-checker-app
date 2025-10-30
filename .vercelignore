@@ -1,0 +1,28 @@
+# Documentation
+docs/
+*.md
+!README.md
+!CLAUDE.md
+
+# Test files
+test_*.py
+check_dependencies.py
+clear_bad_cache.py
+
+# Development files
+.env.local
+.env.example
+uv_requirements.txt
+
+# Build artifacts
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
