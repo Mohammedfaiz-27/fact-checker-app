@@ -8,11 +8,21 @@
   ],
   "routes": [
     {
+      "src": "/api/claims/(.*)",
+      "dest": "main.py"
+    },
+    {
       "src": "/(.*)",
       "dest": "main.py"
     }
   ],
   "env": {
     "PYTHONPATH": "$PYTHONPATH:."
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/main.py"
+    }
+  ]
 }
