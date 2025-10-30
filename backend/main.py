@@ -36,3 +36,7 @@ app.include_router(claim_router, prefix="/api/claims")
 @app.get("/")
 async def root():
     return {"message": "Fact Checker API is running. Use /api/claims endpoint."}
+
+# Vercel serverless function handler
+from mangum import Mangum
+handler = Mangum(app)
